@@ -1,5 +1,4 @@
 ﻿#include "header\dir.h"
-#include <stdlib.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -33,10 +32,39 @@ void __init__() {
         -books.json
 */
 
+int write_to(const char* path, void* context, size_t size, size_t elementcount) {
+    FILE* file = NULL;
+    if (fopen_s(&file, path, "w")) {
+        fprintf(stderr, "error opening while writing to file \"%s\"\n", path);
+        return -1;
+    }
+    for (size_t i = 0; i < elementcount; i++) {
+        Book* b = &((Book*)context)[i];
+        fprintf(file, "%s\t%s\n", b->author, b->title);
+    }
+    fclose(file);
+    return 0;
+}
+
+int add_to(const char* path, void* context, size_t size, size_t elementcount) {
+    FILE* file = NULL;
+    if (fopen_s(&file, path, "a")) {
+        fprintf(stderr, "error opening while adding to file \"%s\"\n", path);
+        return -1;
+    }
+    for (size_t i = 0; i < elementcount; i++) {
+        Book* b = &((Book*)context)[i];
+        fprintf(file, "%s\t%s\n", b->author, b->title);
+    }
+    fclose(file);
+    return 0;
+}
+
+
 static int create_folder(const char* path) {
     if (MKDIR(path) != 0) {
         if (errno == EEXIST) return 0;
-        fprintf(stderr, "Не вдалося створити теку \"%s\"\n", path);
+        fprintf(stderr, "error creating folder \"%s\"\n", path);
         return -1;
     }
     return 0;
@@ -45,15 +73,14 @@ static int create_folder(const char* path) {
 
 static int create_file(const char* path) {
     struct stat st;
-    // Якщо stat повернув 0 — файл існує
     if (stat(path, &st) == 0) {
         return 1;
     }
 
     FILE* f = fopen(path, "w");
     if (!f) {
-        fprintf(stderr, "Не вдалося створити файл \"%s\": %s\n",
-            path, strerror(errno));
+        fprintf(stderr, "error creating file \"%s\"\n",
+            path);
         return -1;
     }
     fclose(f);

@@ -12,6 +12,9 @@
 #define BOOKS_TEST_FILE    "books.json"
 #define SHELL_TEST_FILE    "testcases.txt"
 
+#define LOWER_LIMIT -130.0
+#define UPPER_LIMIT 130.0
+
 
 typedef struct {
     char author[AUTHOR_LEN];

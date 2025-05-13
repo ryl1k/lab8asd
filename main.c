@@ -72,7 +72,11 @@ void shell_sort(double arr[], int n, Counters* cnt) {
     free(gaps);
 }
 
-
+void randomize(double arr[],size_t len) {
+    for (int i = 0; i < len; i++) {
+        arr[i] = LOWER_LIMIT + (rand() / (double)RAND_MAX) * (UPPER_LIMIT - LOWER_LIMIT);
+    }
+}
 
 
 
@@ -85,6 +89,7 @@ void print_books(Book* books, size_t size) {
 
 int main(void) {
 	SetConsoleOutputCP(65001);
+    srand(time(NULL));
 
     // Створення структури файлів та папок
     __init__();
@@ -100,36 +105,17 @@ int main(void) {
     Counters* counter = (Counters*)malloc(sizeof(long long) * 2);
     if (!counter) exit(101);
     counter_set_zero(counter);
-
-    printf("-----------Найгірший випадок----------\n");
-    printf("Масив до сортування:\n");
-    print_books(books_worst_case, 10);
-    printf("\nМасив після сортування:\n");
     selection_sort_books(books_worst_case, 10, counter);
-    print_books(books_worst_case, 10);
-    printf("\n[DEBUG]\nCounters:\n swaps: %lld \n comparisions: %lld\n\n", counter->swaps, counter->comps);
-
-    counter_set_zero(counter);
-
-    printf("-----------Середній випадок----------\n");
+    write_to("Sorted\\Books\\Worst_case.txt", books_worst_case,sizeof(Book), 10);
+    printf("[BOOKS WORST CASE]\t swaps: %lld \t comparisions: %lld\n", counter->swaps, counter->comps);
     
-    printf("Масив до сортування:\n");
-    print_books(books_average_case, 10);
-    printf("\nМасив після сортування:\n");
+    counter_set_zero(counter);
     selection_sort_books(books_average_case, 10, counter);
-    print_books(books_average_case, 10);
-    printf("\n[DEBUG]\nCounters:\n swaps: %lld \n comparisions: %lld\n\n", counter->swaps, counter->comps);
+    printf("[BOOKS AVERAGE CASE]\t swaps: %lld \t comparisions: %lld\n", counter->swaps, counter->comps);
 
     counter_set_zero(counter);
-
-    printf("-----------Найкращий випадок----------\n");
-
-    printf("Масив до сортування:\n");
-    print_books(books_best_case, 10);
-    printf("\nМасив після сортування:\n");
     selection_sort_books(books_best_case, 10, counter);
-    print_books(books_best_case, 10);
-    printf("\n[DEBUG]\nCounters:\n swaps: %lld \n comparisions: %lld\n\n", counter->swaps, counter->comps);
+    printf("[BOOKS BEST CASE]\t swaps: %lld \t comparisions: %lld\n", counter->swaps, counter->comps);
 
 
 
