@@ -72,14 +72,11 @@ void shell_sort(double arr[], int n, Counters* cnt) {
     free(gaps);
 }
 
-void randomize(double arr[],size_t len) {
+void randomize(double* arr,size_t len) {
     for (int i = 0; i < len; i++) {
         arr[i] = LOWER_LIMIT + (rand() / (double)RAND_MAX) * (UPPER_LIMIT - LOWER_LIMIT);
     }
 }
-
-
-
 
 void print_books(Book* books, size_t size) {
     for (int i = 0; i < 10; i++) {
@@ -103,20 +100,36 @@ int main(void) {
     worst_case(books_worst_case, 10);
 
     Counters* counter = (Counters*)malloc(sizeof(long long) * 2);
-    if (!counter) exit(101);
+    if (!counter) { 
+        exit(101);
+    }
+
     counter_set_zero(counter);
     selection_sort_books(books_worst_case, 10, counter);
-    write_to("Sorted\\Books\\Worst_case.txt", books_worst_case,sizeof(Book), 10);
+    cnt_write_to("Sorted\\Books\\Worst_case.txt", counter, sizeof(Counters), 1);
+    book_add_to("Sorted\\Books\\Worst_case.txt", books_worst_case, sizeof(Book), 10);
     printf("[BOOKS WORST CASE]\t swaps: %lld \t comparisions: %lld\n", counter->swaps, counter->comps);
     
     counter_set_zero(counter);
     selection_sort_books(books_average_case, 10, counter);
+    cnt_write_to("Sorted\\Books\\Average_case.txt", counter, sizeof(Counters), 1);
+    book_add_to("Sorted\\Books\\Average_case.txt", books_average_case, sizeof(Book), 10);
     printf("[BOOKS AVERAGE CASE]\t swaps: %lld \t comparisions: %lld\n", counter->swaps, counter->comps);
 
     counter_set_zero(counter);
     selection_sort_books(books_best_case, 10, counter);
+    cnt_write_to("Sorted\\Books\\Best_case.txt", counter, sizeof(Counters), 1);
+    book_add_to("Sorted\\Books\\Best_case.txt", books_best_case, sizeof(Book), 10);
     printf("[BOOKS BEST CASE]\t swaps: %lld \t comparisions: %lld\n", counter->swaps, counter->comps);
+    
+    counter_set_zero(counter);
 
+    for (int i = 0; i < TESTCASES; i++) {
+        double* arr = (double*)calloc(TEST_VALUES[i], sizeof(double));
+        randomize(arr, TEST_VALUES[i]);
+        shell_sort(arr, TEST_VALUES[i], counter);
+        
+    }
 
 
     

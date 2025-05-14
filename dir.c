@@ -32,7 +32,7 @@ void __init__() {
         -books.json
 */
 
-int write_to(const char* path, void* context, size_t size, size_t elementcount) {
+int book_write_to(const char* path, void* context, size_t size, size_t elementcount) {
     FILE* file = NULL;
     if (fopen_s(&file, path, "w")) {
         fprintf(stderr, "error opening while writing to file \"%s\"\n", path);
@@ -46,7 +46,7 @@ int write_to(const char* path, void* context, size_t size, size_t elementcount) 
     return 0;
 }
 
-int add_to(const char* path, void* context, size_t size, size_t elementcount) {
+int book_add_to(const char* path, void* context, size_t size, size_t elementcount) {
     FILE* file = NULL;
     if (fopen_s(&file, path, "a")) {
         fprintf(stderr, "error opening while adding to file \"%s\"\n", path);
@@ -59,6 +59,35 @@ int add_to(const char* path, void* context, size_t size, size_t elementcount) {
     fclose(file);
     return 0;
 }
+
+int cnt_write_to(const char* path, void* context, size_t size, size_t elementcount) {
+    FILE* file = NULL;
+    if (fopen_s(&file, path, "w")) {
+        fprintf(stderr, "error opening while writing to file \"%s\"\n", path);
+        return -1;
+    }
+    for (size_t i = 0; i < elementcount; i++) {
+        Counters* cnt = &((Counters*)context)[i];
+        fprintf(file, "comps: %lld\t swaps: %lld\n", cnt->comps, cnt->swaps);
+    }
+    fclose(file);
+    return 0;
+}
+
+int cnt_add_to(const char* path, void* context, size_t size, size_t elementcount) {
+    FILE* file = NULL;
+    if (fopen_s(&file, path, "a")) {
+        fprintf(stderr, "error opening while adding to file \"%s\"\n", path);
+        return -1;
+    }
+    for (size_t i = 0; i < elementcount; i++) {
+        Counters* cnt = &((Counters*)context)[i];
+        fprintf(file, "comps: %lld\t swaps: %lld\n", cnt->comps, cnt->swaps);
+    }
+    fclose(file);
+    return 0;
+}
+
 
 
 static int create_folder(const char* path) {

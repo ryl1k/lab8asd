@@ -15,6 +15,8 @@
 #define LOWER_LIMIT -130.0
 #define UPPER_LIMIT 130.0
 
+#define TESTCASES 7
+const size_t TEST_VALUES[TESTCASES] = { 50, 100, 500, 2500, 10000, 50000, 100000 };
 
 typedef struct {
     char author[AUTHOR_LEN];
@@ -25,6 +27,7 @@ typedef struct {
     long long comps;
     long long swaps;
 } Counters;
+
 
 
 #endif // CONSTANTS_H
