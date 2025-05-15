@@ -10,7 +10,17 @@
 #define MKDIR(path) _mkdir(path)
 
 void __init__() {
-    create_folder_structure("."); // З папки проекту (де розташований main.c)
+    create_folder_structure("."); 
+    for (int i = 1; i <= TESTCASES; i++) {
+        char path[100];
+        snprintf(path,100, "./Sorted/Shell/Shell_case_%d.txt",i);
+        FILE* file;
+        if (fopen_s(&file, path, "w")) {
+            exit(11);
+        }
+        fwrite("", 1, 1, file);
+        fclose(file);
+    }
 }
 
 /*
@@ -23,6 +33,8 @@ void __init__() {
             -Shell_case_3.txt
             -Shell_case_4.txt
             -Shell_case_5.txt
+            -Shell_case_6.txt
+            -Shell_case_7.txt
         Books/
             -Worst_case.txt
             -Average_case.txt
@@ -129,7 +141,7 @@ static int create_folder_structure(const char* root_path) {
     snprintf(buf, sizeof(buf), "%s/Sorted/Shell", root_path);
     if (create_folder(buf) < 0) return -1;
 
-    for (int i = 1; i <= 5; ++i) {
+    for (int i = 1; i <= TESTCASES; ++i) {
         snprintf(buf, sizeof(buf), "%s/Sorted/Shell/Shell_case_%d.txt", root_path, i);
         if (create_file(buf) < 0) return -1;
     }

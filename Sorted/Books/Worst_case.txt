@@ -1,3 +1,4 @@
+comps: 45	 swaps: 15
 Andriana	title 3
 Bogdan	title 7
 Brandon	title 1
