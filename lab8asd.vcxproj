@@ -134,9 +134,6 @@
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="books.json" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="header\cases.h" />
     <ClInclude Include="header\cJSON.h" />
     <ClInclude Include="header\constants.h" />

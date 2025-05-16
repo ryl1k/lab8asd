@@ -35,6 +35,12 @@ static const size_t TEST_VALUES[TESTCASES] = {
     100000
 };
 
+typedef enum {
+    SEQ_POW2 = 1,        // Формула 1
+    SEQ_2C_POW_3_D = 3,  // Формула 3 
+    SEQ_SEDGEWICK2 = 8   // Формула 8 
+} SequenceType;
+
 typedef struct {
     char author[AUTHOR_LEN];
     char title[TITLE_LEN];

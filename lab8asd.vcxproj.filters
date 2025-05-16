@@ -32,9 +32,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="books.json" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="header\cJSON.h">
       <Filter>Header Files</Filter>
     </ClInclude>

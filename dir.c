@@ -18,7 +18,7 @@ void __init__() {
         if (fopen_s(&file, path, "w")) {
             exit(11);
         }
-        fwrite("", 1, 1, file);
+        fwrite("Shell_case_7.txt\n", 17, 1, file);
         fclose(file);
     }
 }
